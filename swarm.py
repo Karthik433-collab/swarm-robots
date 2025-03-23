@@ -17,7 +17,6 @@ for i in range(11, 14):
     y_joint = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, f"{robot_name}_y")
     data.qpos[x_joint] = east_wall_pos[0]
     data.qpos[y_joint] = east_wall_pos[1]
-
 wall_north_pos = [1.5, 3.0]
 for i in range(3):
     robot_name = f"robot{i+1}"
@@ -25,6 +24,18 @@ for i in range(3):
     y_joint = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, f"{robot_name}_y")
     data.qpos[x_joint] = wall_north_pos[0]
     data.qpos[y_joint] = wall_north_pos[1] - 0.3
+    robot8_x = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "robot8_x")
+robot8_y = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "robot8_y")
+data.qpos[robot8_x] = east_wall_pos[0]
+data.qpos[robot8_y] = east_wall_pos[1]
+
+west_wall_pos =[1.5,3.0]
+robot9_x = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "robot9_x")
+robot9_y = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "robot9_y")
+data.qpos[robot9_x] = west_wall_pos[0]
+data.qpos[robot9_y] = west_wall_pos[1]
+
+
 mujoco.mj_forward(model, data)  # Update physics
 # ====== END OF ADDED SECTION ======
 
