@@ -1,4 +1,4 @@
-<mujoco model="swarm_robots">
+\\<mujoco model="swarm_robots">
     <compiler angle="radian"/>
     <option timestep="0.01"/>
 
@@ -6,6 +6,7 @@
         <texture name="checkered" type="2d" builtin="checker" rgb1="0.9 0.9 0.9" rgb2="0.7 0.7 0.7" width="256" height="256"/>
         <material name="wall_material" rgba="0 1 0 1"/>
         <material name="yellow_wall_material" rgba="1 0.84 0 1"/>
+       <material name="obstacle_material" rgba="0.5 0 0.5 1"/>
         <texture name="ground_texture" type="2d" file="ground.png"/>
         <material name="ground_material" texture="ground_texture"/>
     </asset>
@@ -21,18 +22,19 @@
         <!-- Walls with collision avoidance parameters -->
         <geom name="wall_north" type="box" pos="1.5 3 0.5" size="3 0.2 0.5" material="wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
         <geom name="wall_south" type="box" pos="1.5 -3 0.5" size="3 0.2 0.5" material="wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
-        <geom name="wall_west" type="box" pos="-2 0 0.5" size="0.2 3 0.5" material="wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+         <geom name="wall_west" type="box" pos="-2 0 0.5" size="0.2 3 0.5" material="wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
         <geom name="wall_east" type="box" pos="3 0 0.5" size="0.2 3 0.5" material="wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
         <geom name="small_room_wall2" type="box" pos="-0.8 -2 0.5" size="1 0.2 0.5" material="yellow_wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
-        <geom name="small_room_wall3" type="box" pos="-0.8 0 0.5" size="1 0.2 0.5" material="yellow_wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
-        <geom name="large_room_wall1" type="box" pos="1 1 0.5" size="1 0.2 0.5" material="yellow_wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
-        <geom name="large_room_wall3" type="box" pos="0 2 0.5" size="1 0.2 0.5" material="yellow_wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
-
-        <!-- Goal -->
-        <body name="goal" pos="2 2 0.1">
-            <geom type="box" size="0.2 0.2 0.1" rgba="1 0 0 1"/>
-        </body>
-
+         <geom name="small_room_wall3" type="box" pos="-0.8 0 0.5" size="1 0.2 0.5" material="yellow_wall_material" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+<body name="central_obstacle" pos="1 1 0.5">
+        <geom type="box" size="0.4 0.4 0.5" material="obstacle_material"  
+              contype="1" conaffinity="1" margin="0.05"
+              solref="0.02 1" solimp="0.8 0.9 0.01"/>
+    </body>
+   <body name="goal" pos="2 2 0">
+    <geom type="box" size="0.4 0.4 0.01" rgba="1 0 0 0.5" contype="0" conaffinity="0"/>
+    <site name="goal_sensor" type="cylinder" size="0.5 0.01" rgba="0 0 0 0"/>
+</body>
         <!-- Robot swarm with collision avoidance -->
         <body name="robot1" pos="-2 -2 0">
             <joint name="robot1_x" type="slide" axis="1 0 0"/>
@@ -75,12 +77,55 @@
             <geom type="sphere" size="0.1" rgba="1 0 1 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
             <site name="robot6_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
         </body>
-
-        <body name="robot7" pos="-2 -1.1 0">
+ <body name="robot7" pos="-2 -1.1 0">
             <joint name="robot7_x" type="slide" axis="1 0 0"/>
             <joint name="robot7_y" type="slide" axis="0 1 0"/>
             <geom type="sphere" size="0.1" rgba="0.5 0.5 0.5 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
             <site name="robot7_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
+        </body>
+<body name="robot8" pos="-2 -0.8 0">
+            <joint name="robot8_x" type="slide" axis="1 0 0"/>
+            <joint name="robot8_y" type="slide" axis="0 1 0"/>
+            <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
+                  margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+            <site name="robot8_sensor" type="sphere" size="0.2" rgba="1 0 0 0.3"/>
+        </body>
+
+        <body name="robot9" pos="-1.7 -0.8 0">
+            <joint name="robot9_x" type="slide" axis="1 0 0"/>
+            <joint name="robot9_y" type="slide" axis="0 1 0"/>
+            <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
+                  margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+            <site name="robot9_sensor" type="sphere" size="0.2" rgba="1 0 0 0.3"/>
+        </body>
+
+        <body name="robot10" pos="-1.7 -0.8 0">
+            <joint name="robot10_x" type="slide" axis="1 0 0"/>
+            <joint name="robot10_y" type="slide" axis="0 1 0"/>
+            <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
+                  margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+            <site name="robot10_sensor" type="sphere" size="0.2" rgba="1 0 0 0.3"/>
+         </body>
+
+        <body name="robot11" pos="-1.7 -1.4 0">
+            <joint name="robot11_x" type="slide" axis="1 0 0"/>
+            <joint name="robot11_y" type="slide" axis="0 1 0"/>
+            <geom type="sphere" size="0.1" rgba="1 0 1 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+            <site name="robot11_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
+        </body>
+
+        <body name="robot12" pos="-1.7 -1.4 0">
+            <joint name="robot12_x" type="slide" axis="1 0 0"/>
+            <joint name="robot12_y" type="slide" axis="0 1 0"/>
+            <geom type="sphere" size="0.1" rgba="1 0 1 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+            <site name="robot12_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
+        </body>
+
+        <body name="robot13" pos="-1.7 -1.4 0">
+            <joint name="robot13_x" type="slide" axis="1 0 0"/>
+            <joint name="robot13_y" type="slide" axis="0 1 0"/>
+            <geom type="sphere" size="0.1" rgba="1 0 1 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+            <site name="robot13_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
         </body>
     </worldbody>
 
@@ -99,5 +144,21 @@
         <motor joint="robot6_y" ctrlrange="-9 9"/>
         <motor joint="robot7_x" ctrlrange="-9 9"/>
         <motor joint="robot7_y" ctrlrange="-9 9"/>
+        <motor joint="robot8_x" ctrlrange="-9 9"/>
+        <motor joint="robot8_y" ctrlrange="-9 9"/>
+        <motor joint="robot9_x" ctrlrange="-9 9"/>
+        <motor joint="robot9_y" ctrlrange="-9 9"/>
+        <motor joint="robot10_x" ctrlrange="-9 9"/>
+        <motor joint="robot10_y" ctrlrange="-9 9"/>
+        <motor joint="robot11_x" ctrlrange="-9 9"/>
+        <motor joint="robot11_y" ctrlrange="-9 9"/>
+        <motor joint="robot12_x" ctrlrange="-9 9"/>
+        <motor joint="robot12_y" ctrlrange="-9 9"/>
+        <motor joint="robot13_x" ctrlrange="-9 9"/>
+        <motor joint="robot13_y" ctrlrange="-9 9"/>
     </actuator>
+<sensor>
+        <touch name="goal_trigger" site="goal_sensor"/>
+    </sensor>
 </mujoco>
+
