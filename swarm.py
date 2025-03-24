@@ -120,10 +120,23 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
                     reached_goal[i] = True
             # Wandering robots (7-10)
             else:  
-                control = Kp * error + Kd * d_error  # Same PID but keeps moving
+                control = Kp * error + Kd * d_error  # Existing PID
+                
+                # ====== ADDED GOAL AVOIDANCE ======
+                goal_zone_center = data.xpos[goal_body_id][:2]
+                goal_radius = 1.0  # Radius around goal to avoid
+                to_goal = robot_pos - goal_zone_center
+                distance = np.linalg.norm(to_goal)
+                
+                if distance < goal_radius:
+                    # Add repulsive force away from goal
+                    repulsion_gain = 8.0  # Strength of avoidance
+                    safe_direction = to_goal / (distance + 1e-6)  # Normalize
+                    control += repulsion_gain * (goal_radius - distance) * safe_direction
+                # ====== END OF ADDITION ======
                 
             data.ctrl[i*2:i*2+2] = control
             prev_errors[i] = error
         
         mujoco.mj_step(model, data)
-        viewer.sync()
+        viewer.sync() 
