@@ -87,23 +87,23 @@
             <joint name="robot8_x" type="slide" axis="1 0 0"/>
             <joint name="robot8_y" type="slide" axis="0 1 0"/>
             <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
-                  margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+                  margin="0.08" solref="0.05 1" solimp="0.9 0.95 0.01"/>
             <site name="robot8_sensor" type="sphere" size="0.2" rgba="1 0 0 0.3"/>
         </body>
 
         <body name="robot9" pos="-1.7 -0.8 0">
             <joint name="robot9_x" type="slide" axis="1 0 0"/>
             <joint name="robot9_y" type="slide" axis="0 1 0"/>
-            <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
-                  margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+             <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
+                  margin="0.08" solref="0.05 1" solimp="0.9 0.95 0.01"/>
             <site name="robot9_sensor" type="sphere" size="0.2" rgba="1 0 0 0.3"/>
         </body>
 
         <body name="robot10" pos="-1.7 -0.8 0">
             <joint name="robot10_x" type="slide" axis="1 0 0"/>
             <joint name="robot10_y" type="slide" axis="0 1 0"/>
-            <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
-                  margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
+             <geom type="sphere" size="0.15" rgba="1 0.5 0 1"  
+                  margin="0.08" solref="0.05 1" solimp="0.9 0.95 0.01"/>
             <site name="robot10_sensor" type="sphere" size="0.2" rgba="1 0 0 0.3"/>
          </body>
 
