@@ -77,12 +77,8 @@
             <geom type="sphere" size="0.1" rgba="1 0 1 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
             <site name="robot6_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
         </body>
- <body name="robot7" pos="-2 -1.1 0">
-            <joint name="robot7_x" type="slide" axis="1 0 0"/>
-            <joint name="robot7_y" type="slide" axis="0 1 0"/>
-            <geom type="sphere" size="0.1" rgba="0.5 0.5 0.5 1" margin="0.05" solref="0.02 1" solimp="0.8 0.9 0.01"/>
-            <site name="robot7_sensor" pos="0 0 0.1" size="0.05" type="sphere" rgba="1 1 1 0.5"/>
-        </body>
+ 
+ 
 <body name="robot8" pos="-2 -0.8 0">
             <joint name="robot8_x" type="slide" axis="1 0 0"/>
             <joint name="robot8_y" type="slide" axis="0 1 0"/>
@@ -130,35 +126,79 @@
     </worldbody>
 
     <actuator>
-        <motor joint="robot1_x" ctrlrange="-9 9"/>
-        <motor joint="robot1_y" ctrlrange="-9 9"/>
-        <motor joint="robot2_x" ctrlrange="-9 9"/>
-        <motor joint="robot2_y" ctrlrange="-9 9"/>
-        <motor joint="robot3_x" ctrlrange="-9 9"/>
-        <motor joint="robot3_y" ctrlrange="-9 9"/>
-        <motor joint="robot4_x" ctrlrange="-9 9"/>
-        <motor joint="robot4_y" ctrlrange="-9 9"/>
-        <motor joint="robot5_x" ctrlrange="-9 9"/>
-        <motor joint="robot5_y" ctrlrange="-9 9"/>
-        <motor joint="robot6_x" ctrlrange="-9 9"/>
-        <motor joint="robot6_y" ctrlrange="-9 9"/>
-        <motor joint="robot7_x" ctrlrange="-9 9"/>
-        <motor joint="robot7_y" ctrlrange="-9 9"/>
-        <motor joint="robot8_x" ctrlrange="-9 9"/>
-        <motor joint="robot8_y" ctrlrange="-9 9"/>
-        <motor joint="robot9_x" ctrlrange="-9 9"/>
-        <motor joint="robot9_y" ctrlrange="-9 9"/>
-        <motor joint="robot10_x" ctrlrange="-9 9"/>
-        <motor joint="robot10_y" ctrlrange="-9 9"/>
-        <motor joint="robot11_x" ctrlrange="-9 9"/>
-        <motor joint="robot11_y" ctrlrange="-9 9"/>
-        <motor joint="robot12_x" ctrlrange="-9 9"/>
-        <motor joint="robot12_y" ctrlrange="-9 9"/>
-        <motor joint="robot13_x" ctrlrange="-9 9"/>
-        <motor joint="robot13_y" ctrlrange="-9 9"/>
-    </actuator>
+    <motor joint="robot1_x" ctrlrange="-100 100"/>
+    <motor joint="robot1_y" ctrlrange="-100 100"/>
+    <motor joint="robot2_x" ctrlrange="-100 100"/>
+    <motor joint="robot2_y" ctrlrange="-100 100"/>
+    <motor joint="robot3_x" ctrlrange="-100 100"/>
+    <motor joint="robot3_y" ctrlrange="-100 100"/>
+    <motor joint="robot4_x" ctrlrange="-100 100"/>
+    <motor joint="robot4_y" ctrlrange="-100 100"/>
+    <motor joint="robot5_x" ctrlrange="-100 100"/>
+    <motor joint="robot5_y" ctrlrange="-100 100"/>
+    <motor joint="robot6_x" ctrlrange="-100 100"/>
+    <motor joint="robot6_y" ctrlrange="-100 100"/>
+    <motor joint="robot8_x" ctrlrange="-100 100"/>
+    <motor joint="robot8_y" ctrlrange="-100 100"/>
+    <motor joint="robot9_x" ctrlrange="-100 100"/>
+    <motor joint="robot9_y" ctrlrange="-100 100"/>
+    <motor joint="robot10_x" ctrlrange="-100 100"/>
+    <motor joint="robot10_y" ctrlrange="-100 100"/>
+    <motor joint="robot11_x" ctrlrange="-100 100"/>
+    <motor joint="robot11_y" ctrlrange="-100 100"/>
+    <motor joint="robot12_x" ctrlrange="-100 100"/>
+    <motor joint="robot12_y" ctrlrange="-100 100"/>
+    <motor joint="robot13_x" ctrlrange="-100 100"/>
+    <motor joint="robot13_y" ctrlrange="-100 100"/>
+</actuator>
 <sensor>
         <touch name="goal_trigger" site="goal_sensor"/>
     </sensor>
-</mujoco>
+<!-- Add this right before the closing </mujoco> tag -->
+<!-- Add this right before the closing </mujoco> tag -->
+<equality>
+    <!-- Robot2 follows Robot1 with X offset -->
+    <weld name="triangle_formation1" 
+          body1="robot1" 
+          body2="robot2"
+          relpose="0.3 0 0 1 0 0 0"  
+          solref="0.02 1"
+          solimp="0.9 0.95 0.001"/>
+    
+    <!-- Robot3 follows Robot1 with Y offset -->
+    <weld name="triangle_formation2" 
+          body1="robot1" 
+          body2="robot3"
+          relpose="0 0.3 0 1 0 0 0"  
+          solref="0.02 1"
+          solimp="0.9 0.95 0.001"/>
+     <weld name="formation1" 
+          body1="robot11" 
+          body2="robot12"
+          relpose="0.3 0.3 0 1 0 0 0"
+          solref="0.02 1"
+          solimp="0.9 0.95 0.001"/>
 
+    <!-- Robot13: Left-front of Robot11 -->
+    <weld name="formation2" 
+          body1="robot11" 
+          body2="robot13"
+          relpose="0.3 -0.3 0 1 0 0 0"
+          solref="0.02 1"
+          solimp="0.9 0.95 0.001"/>
+          <weld name="formation4_5" 
+          body1="robot4" 
+          body2="robot5"
+          relpose="0.3 0.3 0 1 0 0 0"
+          solref="0.02 1"
+          solimp="0.9 0.95 0.001"/>
+
+    <!-- Robot6: Left-front of Robot4 -->
+    <weld name="formation4_6" 
+          body1="robot4" 
+          body2="robot6"
+          relpose="0.3 -0.3 0 1 0 0 0"
+          solref="0.02 1"
+          solimp="0.9 0.95 0.001"/>
+</equality>
+</mujoco>
